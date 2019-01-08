@@ -14,6 +14,10 @@ For users:
 
 For developers `canari` is required as well.
 
+## Installation
+
+Open Maltego and import `twint.mtz`.
+
 ## How-to
 
 In these early stages of development (not ready for production mode) this set of transforms will fetch data from a local (localhost:9200) instance of Elasticsearch.
