@@ -16,7 +16,7 @@ For developers `canari` is required as well.
 
 ## Installation
 
-Open Maltego and import `twint.mtz`.
+Open Maltego, import `twint.mtz` and play.
 
 ## How-to
 
