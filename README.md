@@ -5,26 +5,27 @@
 ![1](https://pbs.twimg.com/media/DvrboAwV4AAH1Pt.jpg)
 ![2](https://pbs.twimg.com/media/Dvrby05V4AA1_Bn.jpg)
 
-## Requirements
+## Setup
 
-For users:
+Since canari profiles are not exportable, you have to compile one **for every machine** that you will play with. Every machine will need its own.
+
+Requirements:
+
 - Twint;
 - Elasticsearch;
-- Maltego.
+- Maltego;
+- canari.
 
-For developers `canari` is required as well.
+Once those dependencies are installed, you have to package the profile. This set of transforms is almost batteries included so be sure that you are going to connect to the right Elasticsearch instance, edit `twint/src/twint/transforms/getTweets.py` by your needs. With default setting, the tranforms will connect to a local instance of Elasticsearch (localhost:9200).
 
-## Installation
+Now you have just to package:
 
-Open Maltego, import `twint.mtz` and play.
+- move to `twint/src`;
+- run `canari create-profile twint` (hit `y` a couple of times).
 
 ## How-to
 
-In these early stages of development (not ready for production mode) this set of transforms will fetch data from a local (localhost:9200) instance of Elasticsearch.
-
-If you want to play with a remote instance of Elasticsearch just edit what you need in `twint/src/transforms/getTweets.py`
-
-Feel free to open a new issue and suggest new features or what you would like to have!
+Import `twint.mtz` in Maltego and start playing!
 
 ## Copyrights and Credits
 
