@@ -3,7 +3,7 @@
 > A Maltego transforms collection for Twint
 
 ![1](https://pbs.twimg.com/media/DvrboAwV4AAH1Pt.jpg)
-![2](https://pbs.twimg.com/media/Dvrby05V4AA1_Bn.jpg)
+![2](https://i.imgur.com/j9xgZZx.png)
 
 ## Setup
 
