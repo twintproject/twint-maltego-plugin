@@ -1,7 +1,7 @@
-import json
+import json, re
 
 from elasticsearch import Elasticsearch
-from canari.maltego.entities import Person, Twit, Hashtag, Location
+from canari.maltego.entities import Person, Twit, Hashtag, Location, URL
 from canari.maltego.transform import Transform
 
 es = Elasticsearch()
@@ -186,7 +186,7 @@ class getFollowingFromUser(Transform):
         user = request.entity
         _body = {
                 'query': {
-                    'match' :
+                    'match':
                         {
                             'user': user.value
                         }
@@ -198,5 +198,57 @@ class getFollowingFromUser(Transform):
             _user = hit['_source']
             r = Person()
             r.value = _user['follow']
+            response += r
+        return response
+
+class getLinksFromUser(Transform):
+    input_type = Person
+
+    def do_transform(self, request, response, config):
+        user = request.entity
+        _body = {
+                'query': {
+                    'bool': {
+                        'must': [
+                            {'match': {'username': user.value}},
+                            {'regexp':  {'tweet': '[a-zA-Z0-9]{1,63}'}}
+                        ]
+                    }
+                },
+                'size': request.limits.hard
+            }
+        res = es.search(index="twinttweets", body=_body)
+        for hit in res['hits']['hits']:
+            tweet = hit['_source']
+            _links = re.findall(r'[\w]{3,8}://[\w.]{2,63}.[\w/]{1,63}', tweet['tweet'])
+            for l in _links:
+                r = URL()
+                r.url = l
+                r.title = l.split('/')[2]
+                response += r
+        return response
+
+class getTweetsFromLink(Transform):
+    input_type = URL
+
+    def do_transform(self, request, response, config):
+        url = request.entity
+        _body = {
+                'query': {
+                    'match_phrase': {'tweet': url.value}
+                },
+                'size': request.limits.hard
+            }
+        res = es.search(index="twinttweets", body=_body)
+        for hit in res['hits']['hits']:
+            tweet = hit['_source']
+            r = Twit()
+            r.id = int(tweet['id'])
+            r.content = tweet['tweet'].encode('ascii', 'ignore')
+            r.name = tweet['tweet'].encode('ascii', 'ignore')
+            r.title = tweet['tweet'].encode('ascii', 'ignore')[:30]
+            r.pubdate = tweet['date']
+            r.author = tweet['username']
+            r.author_uri = 'https://twitter.com/' + tweet['username']
             response += r
         return response
