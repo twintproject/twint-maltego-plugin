@@ -16,6 +16,14 @@ Requirements:
 - Maltego;
 - canari.
 
+Install [canari](http://www.canariproject.com/en/latest/canari.quickstart.html#installing-dependencies):
+
+- `sudo apt-get install python2.7 virtualenv python-setuptools`
+- `virtualenv canari3`
+- `source canari3/bin/activate`
+- `pip install canari`
+- `pip install elasticsearch`
+
 Once those dependencies are installed, you have to package the profile. This set of transforms is almost batteries included so be sure that you are going to connect to the right Elasticsearch instance, edit `twint/src/twint/transforms/getTweets.py` by your needs. With default setting, the tranforms will connect to a local instance of Elasticsearch (localhost:9200).
 
 Now you have just to package:
@@ -30,3 +38,4 @@ Import `twint.mtz` in Maltego and start playing!
 ## Copyrights and Credits
 
 The Twint Project - 2018/19
+http://www.canariproject.com/en/latest/canari.quickstart.html#installing-dependencies
